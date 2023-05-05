@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Table from "react-bootstrap/Table";
-// import { ToastContainer, toast } from "react-toastify";
-// import 'react-toastify/dist/ReactToastify.css';
 
 export default function Main(props) {
   const { allFiles, deleteFile } = props;
@@ -10,6 +8,10 @@ export default function Main(props) {
   const { shareFile } = props;
   const [recipientAddress, setRecipientAddress] = useState("");
   const [popUpMap, setPopUpMap] = useState({});
+
+  const { setExpDate } = props;
+  const [selectedDate, setSelectedDate] = useState("");
+  const [FileIndex, setFileIndex] = useState();
 
   const convertBytes = (bytes) => {
     var sizes = ["Bytes", "KB", "MB", "GB"];
@@ -101,6 +103,21 @@ export default function Main(props) {
     }));
   }
 
+  function handleDateChange(e, index) {
+    console.log(e.target.value, index) ;
+    setSelectedDate(e.target.value);
+    setFileIndex(index);
+  }
+  function setExpirationDate(_id, _expDateTime) {
+    var _isSet = window.confirm(
+      "Your File will be deleted on " + _expDateTime.slice(0,10) + " at "+ _expDateTime.slice(11)
+    );
+    if (_isSet) {
+      setExpDate(_id,_expDateTime);
+      // toast("Wow so easy!");
+    }
+  }
+
   const renderPopUp = (file) => {
     // const popUp = popUpMap[file.fileId.toNumber()] || false;
     return (
@@ -143,8 +160,8 @@ export default function Main(props) {
   
   return (
     <div className="container text-center  mt-5 mb-5 ">
-      <div className="row">
-        <div className="col bg-light bg-gradient" style={{ borderRadius: 40 }}>
+      <div className="row" >
+        <div className="col bg-light bg-gradient" style={{ borderRadius: 40, width:"120%" }}>
           <section className="m-5">
             <h1 style={{ color: "#292b2c" }}>My DataDen</h1>
             <div className="tbl-header" style={{ borderRadius: 40 }}>
@@ -161,17 +178,16 @@ export default function Main(props) {
                 <thead>
                   <tr className="bg-ligth">
                     <th style={{ color: "#292b2c", width: "20%" }}>Name</th>
-                    <th style={{ color: "#292b2c", width: "32%" }}>
+                    <th style={{ color: "#292b2c", width: "29%" }}>
                       file Info
                     </th>
                     <th style={{ color: "#292b2c", width: "8%" }}>File Type</th>
                     <th style={{ color: "#292b2c", width: "8%" }}>Size</th>
-                    <th style={{ color: "#292b2c", width: "12%" }}>Date</th>
-                    <th style={{ color: "#292b2c", width: "12%" }}>
-                      Download File
-                    </th>
-                    <th style={{ color: "#292b2c", width: "8%" }}>Share</th>
-                    <th style={{ color: "#292b2c", width: "8%" }}>Delete</th>
+                    <th style={{ color: "#292b2c", width: "13%" }}>Date</th>
+                    <th style={{ color: "#292b2c", width: "24%" }}>Select Expiration Date</th>
+                    <th style={{ color: "#292b2c", width: "17%" }}>Download File</th>
+                    <th style={{ color: "#292b2c", width: "13%" }}>Share</th>
+                    <th style={{ color: "#292b2c", width: "10%" }}>Delete</th>
                   </tr>
                 </thead>
               </Table>
@@ -180,7 +196,7 @@ export default function Main(props) {
               <Table striped bordered hover responsive variant="light">
                 <tbody>
                   {(allFiles || filesList) &&
-                    allFiles.map((file, key) => {
+                    allFiles.map((file, index) => {
                       let infoType = "";
                       if (
                         file.fileType ===
@@ -201,23 +217,46 @@ export default function Main(props) {
                         infoType = "pdf";
                       else infoType = file.fileType;
                       return (
-                        <tr key={key}>
+                        <tr key={index}>
                           <td style={{ color: "#292b2c", width: "20%" }}>
                             {file.fileName}
                           </td>
-                          <td style={{ color: "#292b2c", width: "32%" }}>
+                          <td style={{ color: "#292b2c", width: "30%" }}>
                             {file.fileDes}
                           </td>
-                          <td style={{ color: "#292b2c", width: "8%" }}>
+                          <td style={{ color: "#292b2c", width: "9%" }}>
                             {infoType}
                           </td>
                           <td style={{ color: "#292b2c", width: "8%" }}>
                             {convertBytes(file.fileSize)}
                           </td>
-                          <td style={{ color: "#292b2c", width: "12%" }}>
+                          <td style={{ color: "#292b2c", width: "13%" }}>
                             {timeConverter(file.uploadTime)}
                           </td>
-                          <td style={{ color: "#292b2c", width: "12%" }}>
+                          <td style={{ color: "#292b2c", width: "25%" }}>
+                            <input
+                              type="datetime-local"
+                              value={index === FileIndex ? selectedDate : ""}
+                              onChange={(e) => {
+                                handleDateChange(e, index);
+                              }}
+                              min={new Date().toISOString().slice(0, 16)}
+                              max="2023-07-15T00:00"
+                            ></input>
+                            {index === FileIndex ? (
+                              <button
+                                onClick={() => {
+                                  setExpirationDate(file.fileId.toNumber(),selectedDate);
+                                }}
+                                className="btn btn-primary mt-2"
+                              >
+                                Set
+                              </button>
+                            ) : (
+                              ""
+                            )}
+                          </td>
+                          <td style={{ color: "#292b2c", width: "18%" }}>
                             <button
                               onClick={() => {
                                 downloadFileMain(
@@ -230,8 +269,8 @@ export default function Main(props) {
                               Download
                             </button>
                           </td>
-                          <td style={{ color: "#292b2c", width: "12%" }}>
-                            <button
+                          <td style={{ color: "#292b2c", width: "13%" }}>
+                            <button 
                               onClick={() => {
                                 shareFileMain(file.fileId);
                               }}
@@ -242,7 +281,7 @@ export default function Main(props) {
                             {popUpMap[file.fileId.toNumber()] &&
                               renderPopUp(file)}
                           </td>
-                          <td style={{ color: "#292b2c", width: "8%" }}>
+                          <td style={{ color: "#292b2c", width: "10%" }}>
                             <button
                               onClick={() => {
                                 deleteFile0(file.fileId.toNumber());

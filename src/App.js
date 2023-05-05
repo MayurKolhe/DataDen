@@ -1,25 +1,21 @@
 import React, { Component } from "react";
 import { Switch, Route, HashRouter } from "react-router-dom";
-
 import Web3 from "web3";
 import OurStorageDapp from "./abis/OurStorageDapp.json";
-
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
-
 import "./components/App.css";
 import TopNavbar from "./components/TopNavbar";
 import Main from "./components/Main";
 import UploadFile from "./components/UploadFile";
 import NotConnected from "./components/NotConnected";
 import Background from "./components/Background";
-
 const projectId = "2PIgRlo5DGu97UFh5LZZvKgylph";
 const projectSecret = "2fd4a702ad5d630652bf3afe98dba7c9";
-
 const ipfsClient = require("ipfs-http-client");
 const auth =
   "Basic " + Buffer.from(projectId + ":" + projectSecret).toString("base64");
+
 const ipfs = ipfsClient.create({
   host: "ipfs.infura.io",
   port: 5001,
@@ -28,7 +24,6 @@ const ipfs = ipfsClient.create({
     authorization: auth,
   },
 });
-
 class App extends Component {
   async componentWillMount() {
     await this.loadWeb3();
@@ -42,7 +37,6 @@ class App extends Component {
       this.setState({ connected: false });
     }
   }
-
   async loadBlockchainData() {
     const web3 = new Web3(window.ethereum);
 
@@ -68,7 +62,6 @@ class App extends Component {
       this.setState({ connected: false });
     }
   }
-
   async loadMyAllFiles() {
     this.setState({
       allFiles: [],
@@ -86,7 +79,6 @@ class App extends Component {
       }
     }
   }
-
   async deleteFile(_id) {
     this.setState({
       loading: true,
@@ -107,6 +99,46 @@ class App extends Component {
       .on("error", (error, receipt) => {
         console.log("error", error);
         console.log("receipt", receipt);
+      });
+  }
+  async setExpDate(_id, _expDateTime) {
+    const targetDate = new Date(_expDateTime);
+    const delay = targetDate.getTime() - Date.now();
+    console.log(delay);
+
+    this.setState({
+      loading: true,
+    });
+
+    this.state.ourStorageDapp.methods
+      .deleteFile(_id)
+      .send({ from: this.state.account })
+      .on("transactionHash", (hash) => {
+        console.log("transactionHash", hash);
+      })
+      .on("receipt", async (receipt) => {
+        await this.loadMyAllFiles();
+        this.setState({
+          loading: false,
+        });
+      })
+      .on("confirmation", async (confirmationNumber, receipt) => {
+        console.log("confirmation", confirmationNumber);
+        if (confirmationNumber === 1) {
+          setTimeout(async () => {
+            await this.loadMyAllFiles();
+            this.setState({
+              loading: false,
+            });
+          }, delay);
+        }
+      })
+      .on("error", (error, receipt) => {
+        console.log("error", error);
+        console.log("receipt", receipt);
+        this.setState({
+          loading: false,
+        });
       });
   }
   async downloadFile(_id, _fileHash) {
@@ -156,7 +188,6 @@ class App extends Component {
     fileSizeBox.value = _size;
     this.setState({ showFileDetails: true });
   }
-
   async uploadFile(_name, _des) {
     this.setState({ loading: true });
     // Add file to the IPFS
@@ -191,8 +222,15 @@ class App extends Component {
       })
       .catch((error) => console.error(error));
   }
-
-  async shareFile(_recipient, _fileHash, _fileType,_fileName,_fileSize, _fileDescription,_uploadTime) {
+  async shareFile(
+    _recipient,
+    _fileHash,
+    _fileType,
+    _fileName,
+    _fileSize,
+    _fileDescription,
+    _uploadTime
+  ) {
     this.setState({ loading: true });
     await this.state.ourStorageDapp.methods
       .shareMyfile(
@@ -216,15 +254,12 @@ class App extends Component {
         this.setState({ loading: false });
       });
   }
-
-
   convertBytes(bytes) {
     var sizes = ["Bytes", "KB", "MB", "GB", "TB"];
     if (bytes === 0) return "0 Byte";
     var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
     return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
   }
-
   constructor(props) {
     super(props);
     this.state = {
@@ -243,8 +278,8 @@ class App extends Component {
     this.deleteFile = this.deleteFile.bind(this);
     this.shareFile = this.shareFile.bind(this);
     this.downloadFile = this.downloadFile.bind(this);
+    this.setExpDate = this.setExpDate.bind(this);
   }
-
   render() {
     return (
       // <Router>
@@ -274,6 +309,7 @@ class App extends Component {
                         deleteFile={this.deleteFile}
                         downloadFile={this.downloadFile}
                         shareFile={this.shareFile}
+                        setExpDate={this.setExpDate}
                         showDeletedFiles={this.state.showDeletedFiles}
                       />
                     </Route>
@@ -300,5 +336,4 @@ class App extends Component {
     );
   }
 }
-
 export default App;

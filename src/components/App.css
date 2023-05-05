@@ -26,6 +26,7 @@ th {
   font-size: 12px;
   color: #fff;
   text-transform: uppercase;
+  word-break: break-word;
 }
 td {
   padding: 15px;
@@ -35,6 +36,7 @@ td {
   font-size: 12px;
   color: #fff;
   border-bottom: solid 1px rgba(255, 255, 255, 0.1);
+  word-break: break-word;
 }
 
 /* demo styles */
