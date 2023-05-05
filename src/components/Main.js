@@ -109,7 +109,7 @@ export default function Main(props) {
                       Date
                     </th>
                     <th  style={{ color: "#292b2c", width: "12%" }}>
-                      View File
+                      Download File
                     </th>
                     <th  style={{ color: "#292b2c", width: "8%" }}>
                       Delete
