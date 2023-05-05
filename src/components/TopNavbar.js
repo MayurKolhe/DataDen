@@ -4,26 +4,32 @@ import Identicon from "identicon.js";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 
+const logo = {
+  fontSize: "45px",
+  textAlign: "center"
+}
+
+const cloudLogo = {
+    width: "40px",
+    padding: "2px",
+    backgroundColor: "white",
+    borderRadius: "28%",
+    marginBottom: "6px",
+    marginRight: "12px"
+}
+
 class TopNavbar extends Component {
+  
   render() {
     return (
       <>
-        <Navbar bg="primary" variant="dark">
+        <Navbar bg="dark" variant="dark">
           <Container>
-            <Navbar.Brand href="/">
-              <img
-                alt=""
-                src=""
-                width="30"
-                height="30"
-                className="d-inline-block align-top"
-              />{" "}
+            <Navbar.Brand href="/" style={logo}>
+              <img style={cloudLogo} src="cloud-check-fill.svg" alt=""></img>
               DataDen App
             </Navbar.Brand>
             <div className="ms-auto d-flex align-items-center text-light">
-              <Link to="/uploadfiles" className="btn btn-outline-light mr-2">
-              <i className="bi bi-cloud-plus"></i>
-              </Link>
               {this.props.account && (
                 <Link to="/">
                   <img

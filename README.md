@@ -5,8 +5,6 @@ I Created 'Our Decentralized Storage' on the Ethereum blockchain. And also creat
 
 ## Smart Contract Deployed to **Ropsten test network** and React website to Github pages.
 
-Website Link: [Our Decentralized Storage Dapp](https://abhithory.github.io/Our_Storage_Dapp/ "Our Decentralized Storage Dapp")
-
 ---------------------------
 ## DataDen App Features
 - =>Upload Any type of files in Decentralized Storage (IPFS)

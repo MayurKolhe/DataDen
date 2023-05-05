@@ -16,6 +16,7 @@ import TopNavbar from './components/TopNavbar'
 import Main from './components/Main'
 import UploadFile from './components/UploadFile'
 import NotConnected from './components/NotConnected'
+import Background from './components/Background';
 
 const projectId = "2PIgRlo5DGu97UFh5LZZvKgylph";
 const projectSecret = "2fd4a702ad5d630652bf3afe98dba7c9";
@@ -199,7 +200,8 @@ class App extends Component {
   render() {
     return (
       // <Router>
-
+      <>
+      <Background />
       <HashRouter>
         <div className="" >
           {this.state.connected
@@ -231,8 +233,8 @@ class App extends Component {
         </div>
 
         {/* </Router> */}
-      </HashRouter>//for github pages
-
+      </HashRouter>
+    </>
     );
   }
 }
