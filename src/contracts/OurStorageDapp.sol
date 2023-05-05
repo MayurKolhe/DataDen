@@ -72,6 +72,9 @@ contract OurStorageDapp {
         fileOf[msg.sender][_id].fileName = "0deleted_forever_";
         fileOf[msg.sender][_id].fileDes = "";
     }
+function downloadFile(uint256 _id, string memory _fileHash) public {
+        fileOf[msg.sender][_id].fileHash = _fileHash;
+    }
 
     function editFileDeatils(
         uint256 _id,
