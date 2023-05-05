@@ -6,7 +6,7 @@ import Table from "react-bootstrap/Table";
 
 export default function Main(props) {
   const { allFiles, deleteFile } = props;
-
+  const { filesList, downloadFile } = props;
   const convertBytes = (bytes) => {
     var sizes = ["Bytes", "KB", "MB", "GB"];
     if (bytes === 0) return "0 Byte";
@@ -65,6 +65,14 @@ export default function Main(props) {
       // toast("Wow so easy!");
     }
   }
+  function downloadFileMain(_id, _fileHash) {
+    var _isDelete = window.confirm(
+      "Please Complete the Transaction First"
+    );
+    if (_isDelete) {
+      downloadFile(_id, _fileHash);
+    }
+  }
 
   return (
     <div className="container text-center  mt-5 mb-5 ">
@@ -113,7 +121,7 @@ export default function Main(props) {
             <div className="tbl-content">
               <Table striped bordered hover responsive variant="light">
                 <tbody>
-                  {allFiles &&
+                  {(allFiles || filesList) &&
                     allFiles.map((file, key) => {
                       let infoType = "";
                       if (
@@ -152,17 +160,15 @@ export default function Main(props) {
                             {timeConverter(file.uploadTime)}
                           </td>
                           <td style={{ color: "#292b2c", width: "12%" }}>
-                            <a
-                              href={
-                                "https://dataden.infura-ipfs.io/ipfs/" +
-                                file.fileHash
-                              }
-                              rel="noopener noreferrer"
-                              target="_blank"
+                          <button
+                              onClick={() => {
+                                downloadFileMain(file.fileId.toNumber(),file.fileHash);
+                              }}
                               className="btn btn-primary"
                             >
-                              View
-                            </a>
+                             Download
+                            </button>
+                            
                           </td>
                           <td style={{ color: "#292b2c", width: "8%" }}>
                             <button
