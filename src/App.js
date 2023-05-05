@@ -12,7 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap-icons/font/bootstrap-icons.css"
 
 import './components/App.css';
-import Navbar from './components/Navbar'
+import TopNavbar from './components/TopNavbar'
 import Main from './components/Main'
 import UploadFile from './components/UploadFile'
 import NotConnected from './components/NotConnected'
@@ -205,7 +205,7 @@ class App extends Component {
           {this.state.connected
             ?
             <>
-              <Navbar account={this.state.account} userProfile={this.state.userProfile} />
+              <TopNavbar account={this.state.account} userProfile={this.state.userProfile} />
               {this.state.loading
                 ?
                 <div className="text-center m-5" >

@@ -52,10 +52,10 @@ export default function Main(props) {
         <div className="col bg-dark bg-gradient" style={{ borderRadius: 40 }}>
           <section className="m-5">
             <h1>All Files</h1>
-            <div class="tbl-header">
+            <div className="tbl-header">
               <table
-                cellpadding="0"
-                cellspacing="0"
+                cellPadding="0"
+                cellSpacing="0"
                 border="0"
                 style={{ width: "100%" }}
               >
@@ -86,10 +86,10 @@ export default function Main(props) {
                 </thead>
               </table>
             </div>
-            <div class="tbl-content">
+            <div className="tbl-content">
               <table
-                cellpadding="0"
-                cellspacing="0"
+                cellPadding="0"
+                cellSpacing="0"
                 border="0"
                 style={{ width: "100%" }}
               >
@@ -127,7 +127,7 @@ export default function Main(props) {
                               }}
                               className="btn btn-outline-danger"
                             >
-                              <i class="bi bi-trash"></i>
+                              <i className="bi bi-trash"></i>
                             </button>
                           </td>
                         </tr>
