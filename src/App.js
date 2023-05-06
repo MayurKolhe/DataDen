@@ -101,6 +101,8 @@ class App extends Component {
         console.log("receipt", receipt);
       });
   }
+  
+  /////////////////////Test functions//////////////////
   async setExpDate(_id, _expDateTime) {
     const targetDate = new Date(_expDateTime);
     const delay = targetDate.getTime() - Date.now();
@@ -110,6 +112,11 @@ class App extends Component {
       loading: true,
     });
 
+  
+    this.setState({
+      loading: true,
+    });
+  
     this.state.ourStorageDapp.methods
       .deleteFile(_id)
       .send({ from: this.state.account })
@@ -141,6 +148,7 @@ class App extends Component {
         });
       });
   }
+  
   async downloadFile(_id, _fileHash) {
     this.setState({
       loading: true,

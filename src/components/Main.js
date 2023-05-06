@@ -12,7 +12,6 @@ export default function Main(props) {
   const { setExpDate } = props;
   const [selectedDate, setSelectedDate] = useState("");
   const [FileIndex, setFileIndex] = useState();
-
   const convertBytes = (bytes) => {
     var sizes = ["Bytes", "KB", "MB", "GB"];
     if (bytes === 0) return "0 Byte";
@@ -61,7 +60,7 @@ export default function Main(props) {
       ampm;
     return time;
   }
-
+  
   function deleteFile0(_id) {
     var _isDelete = window.confirm(
       "Are you sure you want to delete this file?"
