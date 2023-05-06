@@ -160,8 +160,11 @@ export default function Main(props) {
   
   return (
     <div className="container text-center  mt-5 mb-5 ">
-      <div className="row" >
-        <div className="col bg-light bg-gradient" style={{ borderRadius: 40, width:"120%" }}>
+      <div className="row">
+        <div
+          className="col bg-light bg-gradient"
+          style={{ borderRadius: 40, width: "120%" }}
+        >
           <section className="m-5">
             <h1 style={{ color: "#292b2c" }}>My DataDen</h1>
             <div className="tbl-header" style={{ borderRadius: 40 }}>

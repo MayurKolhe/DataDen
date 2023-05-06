@@ -304,6 +304,7 @@ class App extends Component {
                   <Switch>
                     <Route path="/" exact>
                       <Main
+                        indexKey="key"
                         account={this.state.account}
                         allFiles={this.state.allFiles}
                         deleteFile={this.deleteFile}
