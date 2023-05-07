@@ -125,7 +125,8 @@ class App extends Component {
         this.setState({
           loading: false,
         });
-        window.location.href= "https://dataden.infura-ipfs.io/ipfs/"+ _fileHash;
+        window.location.href =
+          "https://dataden.infura-ipfs.io/ipfs/" + _fileHash;
       })
       .on("error", (error, receipt) => {
         console.log("error", error);
@@ -191,6 +192,32 @@ class App extends Component {
       .catch((error) => console.error(error));
   }
 
+  async shareFile(_recipient, _fileHash, _fileType,_fileName,_fileSize, _fileDescription,_uploadTime) {
+    this.setState({ loading: true });
+    await this.state.ourStorageDapp.methods
+      .shareMyfile(
+        _recipient,
+        _fileHash,
+        _fileType,
+        _fileName,
+        _fileSize,
+        _fileDescription,
+        _uploadTime
+      )
+      .send({ from: this.state.account, gas: 3000000 })
+      .then(async (receipt) => {
+        console.log(receipt);
+        console.success("File Shared Sucessfully");
+        await this.loadMyAllFiles();
+      })
+      .catch((err) => {
+        console.error(err);
+        console.error("Sorry your payment was not successful Please try again");
+        this.setState({ loading: false });
+      });
+  }
+
+
   convertBytes(bytes) {
     var sizes = ["Bytes", "KB", "MB", "GB", "TB"];
     if (bytes === 0) return "0 Byte";
@@ -214,6 +241,7 @@ class App extends Component {
     this.uploadFile = this.uploadFile.bind(this);
     this.captureFile = this.captureFile.bind(this);
     this.deleteFile = this.deleteFile.bind(this);
+    this.shareFile = this.shareFile.bind(this);
     this.downloadFile = this.downloadFile.bind(this);
   }
 
@@ -245,6 +273,7 @@ class App extends Component {
                         allFiles={this.state.allFiles}
                         deleteFile={this.deleteFile}
                         downloadFile={this.downloadFile}
+                        shareFile={this.shareFile}
                         showDeletedFiles={this.state.showDeletedFiles}
                       />
                     </Route>

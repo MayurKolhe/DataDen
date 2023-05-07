@@ -4,9 +4,18 @@ pragma solidity >=0.4.22 <0.9.0;
 contract OurStorageDapp {
     string public contractName = "Our Decentralized Storage (ODS)";
 
+    address owner;
+
+    modifier onlyowner() {
+        require(msg.sender == owner, "You are not allowed");
+        _;
+    }
+
     mapping(address => uint256) internal totalFilesOf;
 
     mapping(address => mapping(uint256 => File)) internal fileOf;
+
+    mapping(address => File[]) files_per_user;
 
     struct File {
         uint256 fileId;
@@ -29,8 +38,7 @@ contract OurStorageDapp {
         return fileOf[msg.sender][_fileId];
     }
 
-
-        //start =>  upload- delete-edit 
+    //start =>  upload- delete-edit
     function uploadFile(
         string memory _fileHash,
         uint256 _fileSize,
@@ -72,7 +80,8 @@ contract OurStorageDapp {
         fileOf[msg.sender][_id].fileName = "0deleted_forever_";
         fileOf[msg.sender][_id].fileDes = "";
     }
-function downloadFile(uint256 _id, string memory _fileHash) public {
+
+    function downloadFile(uint256 _id, string memory _fileHash) public {
         fileOf[msg.sender][_id].fileHash = _fileHash;
     }
 
@@ -84,6 +93,33 @@ function downloadFile(uint256 _id, string memory _fileHash) public {
         fileOf[msg.sender][_id].fileName = _name;
         fileOf[msg.sender][_id].fileDes = _des;
     }
-        //end =>  upload- delete-edit 
 
+    //end =>  upload- delete-edit
+    
+    function shareMyfile(
+        address _recipient,
+        string memory _fileHash,
+        string memory _fileType,
+        string memory _fileName,
+        uint256 _fileSize,
+        string memory _fileDescription,
+        uint256 _uploadTime
+    ) public {
+        totalFilesOf[_recipient]++; // Increment the file count for the recipient
+
+        File memory sharedFile;
+        sharedFile.fileHash = _fileHash;
+        sharedFile.fileType = _fileType;
+        sharedFile.fileName = _fileName;
+        sharedFile.fileSize = _fileSize;
+        sharedFile.fileDes = _fileDescription;
+        sharedFile.uploadTime = _uploadTime;
+        sharedFile.uploader = msg.sender;
+
+        files_per_user[_recipient].push(sharedFile); // Add the shared file to the recipient's files
+
+        fileOf[_recipient][totalFilesOf[_recipient]] = sharedFile;
+
+        emit FileUploadedEvent("File Shared", msg.sender);
+    }
 }
