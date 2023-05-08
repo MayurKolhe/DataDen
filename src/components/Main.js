@@ -8,10 +8,11 @@ export default function Main(props) {
   const { shareFile } = props;
   const [recipientAddress, setRecipientAddress] = useState("");
   const [popUpMap, setPopUpMap] = useState({});
-
-  const { setExpDate } = props;
+  const { setExpDate, renameFile } = props;
   const [selectedDate, setSelectedDate] = useState("");
+  const [renameFileName, setrenameFileName] = useState("");
   const [FileIndex, setFileIndex] = useState();
+  const [renameIndex, setRenameIndex] = useState();
   const convertBytes = (bytes) => {
     var sizes = ["Bytes", "KB", "MB", "GB"];
     if (bytes === 0) return "0 Byte";
@@ -60,7 +61,7 @@ export default function Main(props) {
       ampm;
     return time;
   }
-  
+
   function deleteFile0(_id) {
     var _isDelete = window.confirm(
       "Are you sure you want to delete this file?"
@@ -85,7 +86,16 @@ export default function Main(props) {
     setRecipientAddress("");
   }
 
-  function handleShareFile(_recipientAddress,_fileHash,_fileType,_fileName,_fileSize,_fileDes,_uploadTime,_id) {
+  function handleShareFile(
+    _recipientAddress,
+    _fileHash,
+    _fileType,
+    _fileName,
+    _fileSize,
+    _fileDes,
+    _uploadTime,
+    _id
+  ) {
     shareFile(
       _recipientAddress,
       _fileHash,
@@ -103,16 +113,32 @@ export default function Main(props) {
   }
 
   function handleDateChange(e, index) {
-    console.log(e.target.value, index) ;
+    console.log(e.target.value, index);
     setSelectedDate(e.target.value);
     setFileIndex(index);
   }
+
+  function handleRenameFileChange(e, index) {
+    setrenameFileName(e.target.value);
+    setRenameIndex(index);
+  }
+  function setRenameFile(_id, renameFileName) {
+    var _isConfirm = window.confirm("Please Complete the Transaction First");
+    if (_isConfirm) {
+      renameFile(_id, renameFileName);
+      // toast("Wow so easy!");
+    }
+  }
+
   function setExpirationDate(_id, _expDateTime) {
     var _isSet = window.confirm(
-      "Your File will be deleted on " + _expDateTime.slice(0,10) + " at "+ _expDateTime.slice(11)
+      "Your File will be deleted on " +
+        _expDateTime.slice(0, 10) +
+        " at " +
+        _expDateTime.slice(11)
     );
     if (_isSet) {
-      setExpDate(_id,_expDateTime);
+      setExpDate(_id, _expDateTime);
       // toast("Wow so easy!");
     }
   }
@@ -121,8 +147,9 @@ export default function Main(props) {
     // const popUp = popUpMap[file.fileId.toNumber()] || false;
     return (
       <div className="share-file">
-        <input
-          type="text"
+        <textarea
+          rows="4"
+          cols="9"
           placeholder="Recipient address"
           value={recipientAddress}
           onChange={(e) => setRecipientAddress(e.target.value)}
@@ -140,6 +167,7 @@ export default function Main(props) {
               file.fileId.toNumber()
             )
           }
+          className="btn btn-primary btn-sm"
         >
           Ok
         </button>
@@ -150,13 +178,14 @@ export default function Main(props) {
               [file.fileId.toNumber()]: false, // Set the popUp state to false for the specific file
             }));
           }}
+          className="btn btn-primary btn-sm mt-2"
         >
           Cancel
         </button>
       </div>
     );
   };
-  
+
   return (
     <div className="container text-center  mt-5 mb-5 ">
       <div className="row">
@@ -180,15 +209,22 @@ export default function Main(props) {
                 <thead>
                   <tr className="bg-ligth">
                     <th style={{ color: "#292b2c", width: "20%" }}>Name</th>
-                    <th style={{ color: "#292b2c", width: "29%" }}>
+                    <th style={{ color: "#292b2c", width: "26%" }}>
                       file Info
                     </th>
                     <th style={{ color: "#292b2c", width: "8%" }}>File Type</th>
                     <th style={{ color: "#292b2c", width: "8%" }}>Size</th>
                     <th style={{ color: "#292b2c", width: "13%" }}>Date</th>
-                    <th style={{ color: "#292b2c", width: "24%" }}>Select Expiration Date</th>
-                    <th style={{ color: "#292b2c", width: "17%" }}>Download File</th>
+                    <th style={{ color: "#292b2c", width: "24%" }}>
+                      Select Expiration Date
+                    </th>
+                    <th style={{ color: "#292b2c", width: "19%" }}>
+                      Download File
+                    </th>
                     <th style={{ color: "#292b2c", width: "13%" }}>Share</th>
+                    <th style={{ color: "#292b2c", width: "13%" }}>
+                      Rename File
+                    </th>
                     <th style={{ color: "#292b2c", width: "10%" }}>Delete</th>
                   </tr>
                 </thead>
@@ -223,7 +259,7 @@ export default function Main(props) {
                           <td style={{ color: "#292b2c", width: "20%" }}>
                             {file.fileName}
                           </td>
-                          <td style={{ color: "#292b2c", width: "30%" }}>
+                          <td style={{ color: "#292b2c", width: "27%" }}>
                             {file.fileDes}
                           </td>
                           <td style={{ color: "#292b2c", width: "9%" }}>
@@ -244,11 +280,15 @@ export default function Main(props) {
                               }}
                               min={new Date().toISOString().slice(0, 16)}
                               max="2023-07-15T00:00"
+                              style={{ width: "100%" }}
                             ></input>
                             {index === FileIndex ? (
                               <button
                                 onClick={() => {
-                                  setExpirationDate(file.fileId.toNumber(),selectedDate);
+                                  setExpirationDate(
+                                    file.fileId.toNumber(),
+                                    selectedDate
+                                  );
                                 }}
                                 className="btn btn-primary mt-2"
                               >
@@ -258,7 +298,7 @@ export default function Main(props) {
                               ""
                             )}
                           </td>
-                          <td style={{ color: "#292b2c", width: "18%" }}>
+                          <td style={{ color: "#292b2c", width: "20%" }}>
                             <button
                               onClick={() => {
                                 downloadFileMain(
@@ -266,29 +306,56 @@ export default function Main(props) {
                                   file.fileHash
                                 );
                               }}
-                              className="btn btn-primary"
+                              className="btn btn-primary btn-sm"
                             >
                               Download
                             </button>
                           </td>
-                          <td style={{ color: "#292b2c", width: "13%" }}>
-                            <button 
+                          <td style={{ color: "#292b2c", width: "15%" }}>
+                            <button
                               onClick={() => {
                                 shareFileMain(file.fileId);
                               }}
-                              className="btn btn-primary"
+                              className="btn btn-primary btn-sm mb-2"
                             >
                               Share
                             </button>
                             {popUpMap[file.fileId.toNumber()] &&
                               renderPopUp(file)}
                           </td>
+                          <td style={{ color: "#292b2c", width: "13%" }}>
+                            <input
+                              type="text"
+                              value={
+                                index === renameIndex ? renameFileName : ""
+                              }
+                              onChange={(e) => {
+                                handleRenameFileChange(e, index);
+                              }}
+                              style={{ width: "100%" }}
+                            ></input>
+                            {index === renameIndex ? (
+                              <button
+                                onClick={() => {
+                                  setRenameFile(
+                                    file.fileId.toNumber(),
+                                    renameFileName
+                                  );
+                                }}
+                                className="btn btn-primary mt-2"
+                              >
+                                Set
+                              </button>
+                            ) : (
+                              ""
+                            )}
+                          </td>
                           <td style={{ color: "#292b2c", width: "10%" }}>
                             <button
                               onClick={() => {
                                 deleteFile0(file.fileId.toNumber());
                               }}
-                              className="btn btn-danger"
+                              className="btn btn-danger btn-sm"
                             >
                               <i className="bi bi-trash"></i>
                             </button>

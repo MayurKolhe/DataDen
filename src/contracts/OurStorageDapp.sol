@@ -85,6 +85,10 @@ contract OurStorageDapp {
         fileOf[msg.sender][_id].fileHash = _fileHash;
     }
 
+    function renameFile(uint256 _id, string memory _renameFileName) public {
+        fileOf[msg.sender][_id].fileName = _renameFileName;
+    }
+
     function editFileDeatils(
         uint256 _id,
         string memory _name,
