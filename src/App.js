@@ -49,11 +49,13 @@ class App extends Component {
 
     const networkId = await web3.eth.net.getId();
     const ourStorageData = OurStorageDapp.networks[networkId];
+    // const ourStorageData = "0xDA7BB0E01AB52883DCcf80103D64E0f1C6322Db0"; 
 
     if (ourStorageData) {
       const ourStorageDapp = web3.eth.Contract(
         OurStorageDapp.abi,
         ourStorageData.address
+        // ourStorageData
       );
       this.setState({ ourStorageDapp });
       await this.loadMyAllFiles();

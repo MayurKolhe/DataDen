@@ -51,8 +51,25 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.2",
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
     "@truffle/hdwallet-provider": "^1.5.1",
     "dotenv": "^10.0.0",
-    "gh-pages": "^2.2.0"
+    "ethers": "^5.7.2",
+    "gh-pages": "^2.2.0",
+    "hardhat": "^2.14.0"
+  },
+  "main": "hardhat.config.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MayurKolhe/DataDen.git"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MayurKolhe/DataDen/issues"
   }
 }

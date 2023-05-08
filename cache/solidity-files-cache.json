@@ -1,0 +1,40 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "E:\\CPSCF559_Final Project\\DataDen\\contracts\\OurStorageDapp.sol": {
+      "lastModificationDate": 1683149493975,
+      "contentHash": "d1fc1afcde65af0f0e06f2d2beef768c",
+      "sourceName": "contracts/OurStorageDapp.sol",
+      "solcConfig": {
+        "version": "0.8.18",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.4.22 <0.9.0"
+      ],
+      "artifacts": [
+        "OurStorageDapp"
+      ]
+    }
+  }
+}

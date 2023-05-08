@@ -16,7 +16,6 @@
 
 Prof. Wenlin Han, CSU Fullerton: whan@fullerton.edu
 
-
 ## Additional Work
 ## Features
 
@@ -30,13 +29,15 @@ Prof. Wenlin Han, CSU Fullerton: whan@fullerton.edu
 
 5. **File Deletion:** Added a delete functionality that allows users to remove files from the decentralized storage, providing control and flexibility over their data.
 
-6. **Enhanced User Interface:** The user interface has been improved to provide a visually appealing and intuitive experience, enhancing usability and user satisfaction.
+6. **File Renaming After Uploading File on Blockchain:** Users can rename the files after uploaded on the blockchain, facilitating better organization and identification of stored data.
 
-7. **Blockchain Deployment On Test Network:** The contract has been successfully deployed on testnets, specifically on Sepolia, ensuring thorough testing and validation of the system's functionality.
+7. **Enhanced User Interface:** The user interface has been improved to provide a visually appealing and intuitive experience, enhancing usability and user satisfaction.
 
-8. **File Renaming and Information:** Users can rename and provide relevant information about the files they upload to the blockchain, facilitating better organization and identification of stored data.
+8. **Blockchain Deployment On Test Network:** The contract has been successfully deployed on testnets, specifically on Sepolia, ensuring thorough testing and validation of the system's functionality.
 
-9.**Added NFT on the Marketplace:** (https://opensea.io/assets/matic/0x2953399124f0cbb46d2cbacd8a89cf0599974963/19147863282887266952391848912241481588230776466484479443965023942425754730497/ )
+9. **File Renaming and Information While Uploading File on Blockchain:** Users can rename and provide relevant information about the files they upload to the blockchain, facilitating better organization and identification of stored data.
+
+10. **Added NFT on the Marketplace:** (https://opensea.io/assets/matic/0x2953399124f0cbb46d2cbacd8a89cf0599974963/19147863282887266952391848912241481588230776466484479443965023942425754730497/ )
 
 ## Project Repo URL
 https://github.com/MayurKolhe/DataDen
