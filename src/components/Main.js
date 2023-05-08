@@ -113,7 +113,8 @@ export default function Main(props) {
   }
 
   function handleDateChange(e, index) {
-    console.log(e.target.value, index);
+    // const d = new Date().toISOString().slice(0, 16)
+    // console.log("**********"+d);
     setSelectedDate(e.target.value);
     setFileIndex(index);
   }

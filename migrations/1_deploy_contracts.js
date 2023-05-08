@@ -1,5 +1,5 @@
-const OurStorageDapp = artifacts.require("OurStorageDapp");
+const DataDen = artifacts.require("DataDen");
 
 module.exports = function(deployer) {
-  deployer.deploy(OurStorageDapp);
+  deployer.deploy(DataDen);
 };
