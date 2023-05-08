@@ -149,8 +149,32 @@ class App extends Component {
       });
   }
   
+  async renameFile(_id, _renameFileName){
+    console.log("from APP.js "+_renameFileName)
+    this.setState({ 
+      loading: true,
+    });
+    this.state.ourStorageDapp.methods
+      .renameFile(_id, _renameFileName)
+      .send({ from: this.state.account })
+      .on("transactionHash", (hash) => {
+        console.log("transactionHash", hash);
+      })
+      .on("receipt", (receipt) => {})
+      .on("confirmation", async (confirmationNumber, receipt) => {
+        await this.loadMyAllFiles();
+        this.setState({
+          loading: false,
+        });
+      })
+      .on("error", (error, receipt) => {
+        console.log("error", error);
+        console.log("receipt", receipt);
+      });
+  }
+
   async downloadFile(_id, _fileHash) {
-    this.setState({
+    this.setState({ 
       loading: true,
     });
     this.state.ourStorageDapp.methods
@@ -287,6 +311,7 @@ class App extends Component {
     this.shareFile = this.shareFile.bind(this);
     this.downloadFile = this.downloadFile.bind(this);
     this.setExpDate = this.setExpDate.bind(this);
+    this.renameFile = this.renameFile.bind(this)
   }
   render() {
     return (
@@ -319,6 +344,7 @@ class App extends Component {
                         downloadFile={this.downloadFile}
                         shareFile={this.shareFile}
                         setExpDate={this.setExpDate}
+                        renameFile={this.renameFile}
                         showDeletedFiles={this.state.showDeletedFiles}
                       />
                     </Route>
