@@ -17,7 +17,7 @@ contract('Our Social Media', ([account1, account2, account3]) => {
             const address = await ourStorageDapp.address;
             const contractName = await ourStorageDapp.contractName();
 
-            assert.equal(contractName, "Our Decentralized Storage (ODS)");
+            assert.equal(contractName, "Data Den Decentralized Storage");
             assert.notEqual(address, 0x0)
             assert.notEqual(address, '')
             assert.notEqual(address, null)

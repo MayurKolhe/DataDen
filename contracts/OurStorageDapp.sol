@@ -2,7 +2,7 @@
 pragma solidity >=0.4.22 <0.9.0;
 
 contract OurStorageDapp {
-    string public contractName = "Our Decentralized Storage (ODS)";
+    string public contractName = "Data Den Decentralized Storage";
 
     mapping(address => uint256) internal totalFilesOf;
 
