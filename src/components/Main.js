@@ -1,19 +1,30 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Table from "react-bootstrap/Table";
+import  { useState } from "react";
 // import { ToastContainer, toast } from "react-toastify";
 // import 'react-toastify/dist/ReactToastify.css';
 
 export default function Main(props) {
   const { allFiles, deleteFile } = props;
   const { filesList, downloadFile } = props;
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredFiles, setFilteredFiles] = useState(allFiles);
   const convertBytes = (bytes) => {
     var sizes = ["Bytes", "KB", "MB", "GB"];
     if (bytes === 0) return "0 Byte";
     var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
     return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
   };
-
+  function handleSearch(event) {
+    const query = event.target.value;
+    setSearchQuery(query);
+    const filtered = allFiles.filter((file) =>
+      file.fileName.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredFiles(filtered);
+  }
+  
   function timeConverter(UNIX_timestamp) {
     var a = new Date(UNIX_timestamp * 1000);
     var months = [
@@ -80,6 +91,15 @@ export default function Main(props) {
         <div className="col bg-light bg-gradient" style={{ borderRadius: 40}}>
           <section className="m-5">
             <h1 style={{ color: "#292b2c" }}>My DataDen</h1>
+            <div className="form-group">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Search files..."
+          value={searchQuery}
+          onChange={handleSearch}
+        />
+      </div>
             <div className="tbl-header" style={{ borderRadius: 40 }}>
               <Table
                 striped
@@ -121,8 +141,8 @@ export default function Main(props) {
             <div className="tbl-content">
               <Table striped bordered hover responsive variant="light">
                 <tbody>
-                  {(allFiles || filesList) &&
-                    allFiles.map((file, key) => {
+                  {(filteredFiles || filesList) &&
+                    filteredFiles.map((file, key) => {
                       let infoType = "";
                       if (
                         file.fileType ===
@@ -205,3 +225,4 @@ export default function Main(props) {
     </div>
   );
 }
+
