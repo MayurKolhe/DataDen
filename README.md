@@ -18,15 +18,25 @@ Prof. Wenlin Han, CSU Fullerton: whan@fullerton.edu
 
 
 ## Additional Work
+## Features
 
-1. Users can upload anytype of file in Decentralized storage
-2. Added feature to send the file from one account to another account on blockchain.
-3. Users can download the file uploaded to the decentralized storage
-4. Added feature to manually set the expiration date to automatically delete the file
-5. Added delete functionality to delete the file uploaded to the storage
-6. Improvised the user interface to give better look to the user
-7. Deployed the contract to testnets (deployed on Sepolia)
-8. Users can rename and provide file info.
+1. **Decentralized Storage:** Users can securely upload any type of file to the decentralized storage, ensuring data integrity and availability.
+
+2. **File Transfer on Blockchain:** Added a feature to send files from one account to another account using blockchain technology, ensuring secure and transparent transactions.
+
+3. **File Download:** Users can easily download the files uploaded to the decentralized storage, allowing seamless access to their data from any device.
+
+4. **File Expiration Management:** Users can manually set an expiration date for their files, enabling automatic deletion after the specified period, ensuring data privacy and storage optimization.
+
+5. **File Deletion:** Added a delete functionality that allows users to remove files from the decentralized storage, providing control and flexibility over their data.
+
+6. **Enhanced User Interface:** The user interface has been improved to provide a visually appealing and intuitive experience, enhancing usability and user satisfaction.
+
+7. **Blockchain Deployment On Test Network:** The contract has been successfully deployed on testnets, specifically on Sepolia, ensuring thorough testing and validation of the system's functionality.
+
+8. **File Renaming and Information:** Users can rename and provide relevant information about the files they upload to the blockchain, facilitating better organization and identification of stored data.
+
+9.**Added NFT on the Marketplace:** (https://opensea.io/assets/matic/0x2953399124f0cbb46d2cbacd8a89cf0599974963/19147863282887266952391848912241481588230776466484479443965023942425754730497/ )
 
 ## Project Repo URL
 https://github.com/MayurKolhe/DataDen
@@ -57,3 +67,8 @@ https://github.com/MayurKolhe/DataDen
       For the "Network Name" field enter "localhost".
       For the "New RPC URL" field enter "http://127.0.0.1:7545".
       For the chain ID enter "1337". Then click save.
+
+## References
+https://www.youtube.com/watch?v=OLsteD3xkPQ
+https://github.com/ethereumbook/ethereumbook/blob/develop/12dapps.asciidoc
+https://github.com/ethereumbook/ethereumbook/tree/develop/code/auction_dapp
