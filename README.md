@@ -23,11 +23,11 @@ Prof. Wenlin Han, CSU Fullerton: whan@fullerton.edu
 
 2. **File Transfer on Blockchain:** Added a feature to send files from one account to another account using blockchain technology, ensuring secure and transparent transactions.
 
-3. **File Download:** Users can easily download the files uploaded to the decentralized storage, allowing seamless access to their data from any device.
+3. **File Download:** Users can easily download the files uploaded to the DataDen app, allowing seamless access to their data from any device.
 
 4. **File Expiration Management:** Users can manually set an expiration date for their files, enabling automatic deletion after the specified period, ensuring data privacy and storage optimization.
 
-5. **File Deletion:** Added a delete functionality that allows users to remove files from the decentralized storage, providing control and flexibility over their data.
+5. **File Deletion:** Added a delete functionality that allows users to remove files from the app, providing control and flexibility over their data.
 
 6. **File Renaming After Uploading File on Blockchain:** Users can rename the files after uploaded on the blockchain, facilitating better organization and identification of stored data.
 
@@ -37,8 +37,8 @@ Prof. Wenlin Han, CSU Fullerton: whan@fullerton.edu
 
 9. **File Renaming and Information While Uploading File on Blockchain:** Users can rename and provide relevant information about the files they upload to the blockchain, facilitating better organization and identification of stored data.
 
-10. **Added NFT on the Marketplace:** (https://opensea.io/assets/matic/0x2953399124f0cbb46d2cbacd8a89cf0599974963/19147863282887266952391848912241481588230776466484479443965023942425754730497/ )
-
+10. **Added NFT on the Marketplace:** (https://opensea.io/assets/matic/0x2953399124f0cbb46d2cbacd8a89cf0599974963/19147863282887266952391848912241481588230776466484479443965023942425754730497/ 
+)
 ## Project Repo URL
 https://github.com/MayurKolhe/DataDen
 
@@ -60,8 +60,8 @@ https://github.com/MayurKolhe/DataDen
 ## 1. Clone/download the repos 
 
 ## 2. Configure the project
-      First run npm install to install all the dependencies
-      Then npm run start 
+      npm install
+      npm run start 
 
 ## 3. Metamask Connection
       Use account private key and import it to metamask.
@@ -69,6 +69,9 @@ https://github.com/MayurKolhe/DataDen
       For the "New RPC URL" field enter "http://127.0.0.1:7545".
       For the chain ID enter "1337". Then click save.
 
+## Comammnds to run on Sepolia testnet
+    To compile the contracts :  npx hardhat compile
+    To deploy the contracts  :  npx hardhat run deployments/deploy.js --network sepolia
 ## References
 https://www.youtube.com/watch?v=OLsteD3xkPQ
 https://github.com/ethereumbook/ethereumbook/blob/develop/12dapps.asciidoc

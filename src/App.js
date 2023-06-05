@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Switch, Route, HashRouter } from "react-router-dom";
 import Web3 from "web3";
-import OurStorageDapp from "./abis/OurStorageDapp.json";
+import DataDen from "./abis/DataDen.json";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./components/App.css";
@@ -48,16 +48,16 @@ class App extends Component {
     this.setState({ account: accounts[0] });
 
     const networkId = await web3.eth.net.getId();
-    const ourStorageData = OurStorageDapp.networks[networkId];
-    // const ourStorageData = "0xDA7BB0E01AB52883DCcf80103D64E0f1C6322Db0"; 
+    const data = DataDen.networks[networkId];
+    // const data = "0xDA7BB0E01AB52883DCcf80103D64E0f1C6322Db0"; 
 
-    if (ourStorageData) {
-      const ourStorageDapp = web3.eth.Contract(
-        OurStorageDapp.abi,
-        ourStorageData.address
-        // ourStorageData
+    if (data) {
+      const dataDen = web3.eth.Contract(
+        DataDen.abi,
+        data.address
+        // data
       );
-      this.setState({ ourStorageDapp });
+      this.setState({ dataDen });
       await this.loadMyAllFiles();
       this.setState({ loading: false });
     } else {
@@ -68,12 +68,12 @@ class App extends Component {
     this.setState({
       allFiles: [],
     });
-    const totalFilesCount = await this.state.ourStorageDapp.methods
+    const totalFilesCount = await this.state.dataDen.methods
       .getTotalFileCount()
       .call();
 
     for (let i = totalFilesCount; i >= 1; i--) {
-      let file = await this.state.ourStorageDapp.methods.getFileOf(i).call();
+      let file = await this.state.dataDen.methods.getFileOf(i).call();
       if (file.fileName !== "0deleted_") {
         this.setState({
           allFiles: [...this.state.allFiles, file],
@@ -85,7 +85,7 @@ class App extends Component {
     this.setState({
       loading: true,
     });
-    this.state.ourStorageDapp.methods
+    this.state.dataDen.methods
       .deleteFile(_id)
       .send({ from: this.state.account })
       .on("transactionHash", (hash) => {
@@ -107,19 +107,15 @@ class App extends Component {
   /////////////////////Test functions//////////////////
   async setExpDate(_id, _expDateTime) {
     const targetDate = new Date(_expDateTime);
+    // let d = new Date().toISOString().slice(0, 16)
     const delay = targetDate.getTime() - Date.now();
-    console.log(delay);
+    // console.log("second"+Date.now().toLocaleString());
 
     this.setState({
       loading: true,
     });
 
-  
-    this.setState({
-      loading: true,
-    });
-  
-    this.state.ourStorageDapp.methods
+    this.state.dataDen.methods
       .deleteFile(_id)
       .send({ from: this.state.account })
       .on("transactionHash", (hash) => {
@@ -150,13 +146,12 @@ class App extends Component {
         });
       });
   }
-  
   async renameFile(_id, _renameFileName){
-    console.log("from APP.js "+_renameFileName)
+    // console.log("from APP.js "+_renameFileName)
     this.setState({ 
       loading: true,
     });
-    this.state.ourStorageDapp.methods
+    this.state.dataDen.methods
       .renameFile(_id, _renameFileName)
       .send({ from: this.state.account })
       .on("transactionHash", (hash) => {
@@ -179,7 +174,7 @@ class App extends Component {
     this.setState({ 
       loading: true,
     });
-    this.state.ourStorageDapp.methods
+    this.state.dataDen.methods
       .downloadFile(_id, _fileHash)
       .send({ from: this.state.account })
       .on("transactionHash", (hash) => {
@@ -191,8 +186,7 @@ class App extends Component {
         this.setState({
           loading: false,
         });
-        window.location.href =
-          "https://dataden.infura-ipfs.io/ipfs/" + _fileHash;
+        window.open("https://dataden.infura-ipfs.io/ipfs/" + _fileHash, '_blank')
       })
       .on("error", (error, receipt) => {
         console.log("error", error);
@@ -228,7 +222,7 @@ class App extends Component {
     ipfs
       .add(this.state.buffer)
       .then((result) => {
-        this.state.ourStorageDapp.methods
+        this.state.dataDen.methods
           .uploadFile(
             result.path,
             result.size,
@@ -266,7 +260,7 @@ class App extends Component {
     _uploadTime
   ) {
     this.setState({ loading: true });
-    await this.state.ourStorageDapp.methods
+    await this.state.dataDen.methods
       .shareMyfile(
         _recipient,
         _fileHash,
@@ -298,7 +292,7 @@ class App extends Component {
     super(props);
     this.state = {
       account: "",
-      ourStorageDapp: null,
+      dataDen: null,
       postCount: 0,
       allFiles: [],
       buffer: "",
